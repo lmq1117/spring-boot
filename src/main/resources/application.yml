@@ -1,0 +1,16 @@
+spring:
+  redis:
+    database: 2
+    password: abc123
+    port: 6379
+    host: 122.51.104.146
+    lettuce:
+      pool:
+        min-idle: 5
+        max-idle: 10
+        max-active: 8
+        max-wait: 1000ms
+      shutdown-timeout: 10000ms
+    timeout: 10000
+server:
+  port: 8084
