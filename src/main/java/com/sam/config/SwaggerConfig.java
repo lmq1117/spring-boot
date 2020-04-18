@@ -1,8 +1,14 @@
 package com.sam.config;
 
 
+import jdk.jfr.Frequency;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
+import springfox.documentation.RequestHandler;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.VendorExtension;
@@ -12,17 +18,37 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
-import static springfox.documentation.service.ApiInfo.DEFAULT_CONTACT;
 
 @Configuration
 @EnableSwagger2 //开启swagger
 public class SwaggerConfig {
 
     @Bean
-    public Docket docket() {
+    public Docket docket(Environment environment) {
+
+        //dev test环境开启swagger 生产环境不开启swagger
+        Profiles profiles = Profiles.of("dev","test");
+
+
+
+
+
         return new Docket(DocumentationType.SWAGGER_2)
-                //配置swagger信息
-                .apiInfo(apiInfo());
+                //配置swagger信息start
+                .apiInfo(apiInfo())
+                //配置swagger基本信息end
+
+                .enable(environment.acceptsProfiles(profiles)) //启用｜关闭swagger
+
+                //配置swagger扫描哪些借口start
+                .select()
+                //配置要扫描借口的方式 只扫描 com.sam.controller包下面的 符合/sam/**的方法
+                .apis(RequestHandlerSelectors.basePackage("com.sam.controller"))
+                .paths(PathSelectors.ant("/sam/**"))
+                .build()
+                //配置swagger扫描哪些借口end
+
+        ;
     }
 
     private ApiInfo apiInfo() {

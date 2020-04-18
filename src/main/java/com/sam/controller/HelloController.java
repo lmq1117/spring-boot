@@ -10,4 +10,19 @@ public class HelloController {
     public String hello(){
         return "hello";
     }
+
+    @GetMapping({"/sam/hello2"})
+    public String hello2(){
+        return "hello2.sam";
+    }
+
+    @GetMapping({"/sam/hello3"})
+    public String hello3(){
+        return "hello3.sam";
+    }
+
+    @GetMapping("/kevin/hello4")
+    public String hello4(){
+        return "hello4.kevin";
+    }
 }
