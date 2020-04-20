@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://122.51.104.146:3306/mp?useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
