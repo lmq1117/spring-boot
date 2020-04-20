@@ -4,12 +4,22 @@ package com.sam.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.session.FlushMode;
+import org.springframework.session.MapSession;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
+import org.springframework.session.data.redis.config.ConfigureNotifyKeyspaceEventsAction;
+import org.springframework.session.data.redis.config.ConfigureRedisAction;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
+import org.springframework.util.StringUtils;
 
 //@Configuration
 public class MyRedisHttpSessionConfiguration extends RedisHttpSessionConfiguration {
@@ -21,12 +31,47 @@ public class MyRedisHttpSessionConfiguration extends RedisHttpSessionConfigurati
 
     private ClassLoader classLoader;
 
+    private FlushMode flushMode = FlushMode.ON_SAVE;
+    private String cleanupCron = "0 * * * * *";
+    private ConfigureRedisAction configureRedisAction = new ConfigureNotifyKeyspaceEventsAction();
+    private ApplicationEventPublisher applicationEventPublisher;
+    private Integer maxInactiveIntervalInSeconds = MapSession.DEFAULT_MAX_INACTIVE_INTERVAL_SECONDS;
+    private String redisNamespace = RedisIndexedSessionRepository.DEFAULT_NAMESPACE;
 
     @Autowired
     RedisProperties redisProperties;
 
     @Value("${spring.session.redis.database}")
     private int sessionRedisDatabase;
+
+
+    public MyRedisHttpSessionConfiguration(){
+        this.flushMode = FlushMode.ON_SAVE;
+        this.cleanupCron = "0 * * * * *";
+        this.configureRedisAction = new ConfigureNotifyKeyspaceEventsAction();
+    }
+
+
+    @Bean
+    public RedisIndexedSessionRepository sessionRepository(){
+        RedisTemplate<Object, Object> redisTemplate = this.createRedisTemplate();
+        RedisIndexedSessionRepository sessionRepository = new RedisIndexedSessionRepository(this.createRedisTemplate());
+        sessionRepository.setApplicationEventPublisher(this.applicationEventPublisher);
+
+        if(this.defaultRedisSerializer != null) {
+            sessionRepository.setDefaultSerializer(this.defaultRedisSerializer);
+        }
+        sessionRepository.setDefaultMaxInactiveInterval(this.maxInactiveIntervalInSeconds.intValue());
+        if(StringUtils.hasText(this.redisNamespace)) {
+            sessionRepository.setRedisKeyNamespace(this.redisNamespace);
+        }
+        sessionRepository.setFlushMode(this.flushMode);
+        return sessionRepository;
+
+    }
+
+
+
 
 
 
@@ -48,8 +93,16 @@ public class MyRedisHttpSessionConfiguration extends RedisHttpSessionConfigurati
     public RedisConnectionFactory redisConnectionFactory() {
         String host = redisProperties.getHost();
         int port = redisProperties.getPort();
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(host,port);
+        String password = redisProperties.getPassword();
+
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(host,port);
+        redisStandaloneConfiguration.setPassword(password);
+
+        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
         lettuceConnectionFactory.setDatabase(sessionRedisDatabase);
+        System.out.println("=================");
+        System.out.println(sessionRedisDatabase);
+        System.out.println("=================");
         lettuceConnectionFactory.afterPropertiesSet();
         return lettuceConnectionFactory;
     }
