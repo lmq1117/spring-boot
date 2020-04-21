@@ -340,7 +340,7 @@ limit 1
     @Test
     public void selectByWrapperOne(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        queryWrapper.like("name","雨").lt("age",40);
+        queryWrapper.like("name","张雨").lt("age",40);
         User user = userMapper.selectOne(queryWrapper);
         System.out.println(user);
     }
@@ -395,24 +395,24 @@ limit 1
     /*
     使用自定义查询 带查询构建器
      */
-    @Test
-    public void selectAll(){
-        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
-        lambdaQuery.likeRight(User::getName,"王")
-                .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
-        ;
-        List<User> users = userMapper.selectAll(lambdaQuery);
-        users.forEach(System.out::println);
-    }
+    //@Test
+    //public void selectAll(){
+    //    LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+    //    lambdaQuery.likeRight(User::getName,"王")
+    //            .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
+    //    ;
+    //    List<User> users = userMapper.selectAll(lambdaQuery);
+    //    users.forEach(System.out::println);
+    //}
 
     /*
         使用自定义查询 带查询构建器
      */
-    @Test
-    public void selectMyAll(){
-        List<User> users = userMapper.selectMyAll();
-        users.forEach(System.out::println);
-    }
+    //@Test
+    //public void selectMyAll(){
+    //    List<User> users = userMapper.selectMyAll();
+    //    users.forEach(System.out::println);
+    //}
 
 
 
