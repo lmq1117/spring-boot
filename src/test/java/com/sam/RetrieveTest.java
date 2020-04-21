@@ -3,9 +3,11 @@ package com.sam;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sam.dao.UserMapper;
 import com.sam.entity.User;
 import org.junit.Assert;
@@ -415,10 +417,16 @@ limit 1
     //}
 
 
-
+    @Test
     public void selectPage(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        queryWrapper.like("name","雨").lt("age",40);
+        queryWrapper.ge("age",25);
+
+        Page<User> page = new Page<User>(1,2);
+        IPage<User> iPage = userMapper.selectPage(page,queryWrapper);
+        System.out.println("总页数："+iPage.getPages());
+        System.out.println("总记录数："+iPage.getTotal());
+        iPage.getRecords().forEach(System.out::println);
     }
 
 
