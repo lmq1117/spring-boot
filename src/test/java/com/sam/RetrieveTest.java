@@ -393,10 +393,10 @@ limit 1
 
 
     /*
-    使用自定义查询
+    使用自定义查询 带查询构建器
      */
     @Test
-    public void selectMy(){
+    public void selectAll(){
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
         lambdaQuery.likeRight(User::getName,"王")
                 .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
@@ -404,6 +404,16 @@ limit 1
         List<User> users = userMapper.selectAll(lambdaQuery);
         users.forEach(System.out::println);
     }
+
+    /*
+        使用自定义查询 带查询构建器
+     */
+    @Test
+    public void selectMyAll(){
+        List<User> users = userMapper.selectMyAll();
+        users.forEach(System.out::println);
+    }
+
 
 
     public void selectPage(){
