@@ -12,8 +12,5 @@ logging:
     #日志格式
     console: '%p%m%n'
 
-
-
 mybatis-plus:
-  mapper-locations:
-  - com/sam/mapper/*
+  mapper-locations: classpath:/mapper/*Mapper.xml

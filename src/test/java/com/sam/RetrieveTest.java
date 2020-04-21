@@ -395,15 +395,15 @@ limit 1
     /*
     使用自定义查询 带查询构建器
      */
-    //@Test
-    //public void selectAll(){
-    //    LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
-    //    lambdaQuery.likeRight(User::getName,"王")
-    //            .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
-    //    ;
-    //    List<User> users = userMapper.selectAll(lambdaQuery);
-    //    users.forEach(System.out::println);
-    //}
+    @Test
+    public void selectAll(){
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+        lambdaQuery.likeRight(User::getName,"王")
+                .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
+        ;
+        List<User> users = userMapper.selectAll(lambdaQuery);
+        users.forEach(System.out::println);
+    }
 
     /*
         使用自定义查询 带查询构建器

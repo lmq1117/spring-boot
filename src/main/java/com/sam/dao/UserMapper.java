@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.sam.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 //import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -44,7 +45,7 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
     //自定义sql  ${ew.customSqlSegment} 使用查询构建器时需要写 不使用则可以不写
-    //@Select("select * from user ${ew.customSqlSegment}") //注解方式
+//    @Select("select * from user ${ew.customSqlSegment}") //注解方式
     List<User> selectAll(@Param(Constants.WRAPPER) Wrapper<User> wrapper);
 
     //@Select("select * from user where age >= 27")
