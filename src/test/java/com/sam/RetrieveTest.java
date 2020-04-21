@@ -263,5 +263,39 @@ limit 1
         users1.forEach(System.out::println);
     }
 
+    /*
+    实体作为条件构造器构造方法的参数
+    可继续使用其他构造器 与实体是and关系
+     */
+    @Test
+    public void selectByWrapperEntity(){
+        User u = new User();
+        u.setName("李艺伟");
+        u.setEmail("lyw@baomidou.com");
+        u.setAge(28);
+        //实体作为条件构造器构造方法的参数
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>(u);
+        //可继续使用其他构造器 与实体是and关系
+        queryWrapper.eq("manager_id",1088248166370832385L).eq("name","李艺伟");
+
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    @Test
+    public void selectByWrapperAllEq(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        Map<String,Object> params = new HashMap<>();
+        params.put("name","王天风");
+        //params.put("age",25);
+        params.put("email",null);
+
+        //queryWrapper.allEq(params,false);
+        queryWrapper.allEq((k,v)->!k.equals("name"),params);
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+
 
 }
