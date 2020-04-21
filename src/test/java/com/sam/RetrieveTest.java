@@ -282,6 +282,10 @@ limit 1
         users.forEach(System.out::println);
     }
 
+    /*
+    allEq
+
+     */
     @Test
     public void selectByWrapperAllEq(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
@@ -296,6 +300,48 @@ limit 1
         users.forEach(System.out::println);
     }
 
+    /*
+    selectMaps 查询结果丢map里
+     */
+    @Test
+    public void selectByWrapperMaps(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email").select("id","name");
+        List<Map<String,Object>> mapLists = userMapper.selectMaps(queryWrapper);
+        mapLists.forEach(System.out::println);
+    }
+    /*
+    selectObjs 查询第一列
+     */
+    @Test
+    public void selectByWrapperObjs(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email").select("id","name");
+        List<Object> mapLists = userMapper.selectObjs(queryWrapper);
+        mapLists.forEach(System.out::println);
+    }
+
+    /*
+    count(1) 总记录数 不要写select字段
+     */
+    @Test
+    public void selectByWrapperCount(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email");
+        Integer count = userMapper.selectCount(queryWrapper);
+        System.out.println("总记录数："+count);
+    }
+
+    /*
+    selectOne
+     */
+    @Test
+    public void selectByWrapperOne(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("name","雨").lt("age",40);
+        User user = userMapper.selectOne(queryWrapper);
+        System.out.println(user);
+    }
 
 
 }
