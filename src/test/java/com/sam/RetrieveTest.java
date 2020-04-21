@@ -406,6 +406,10 @@ limit 1
     }
 
 
+    public void selectPage(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.like("name","雨").lt("age",40);
+    }
 
 
 
