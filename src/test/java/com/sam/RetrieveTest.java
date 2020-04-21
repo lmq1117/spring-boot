@@ -1,9 +1,11 @@
 package com.sam;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.sam.dao.UserMapper;
 import com.sam.entity.User;
 import org.junit.Assert;
@@ -342,6 +344,69 @@ limit 1
         User user = userMapper.selectOne(queryWrapper);
         System.out.println(user);
     }
+
+    /*
+    lambda条件构造器 好处:防误写
+    创建方式 三种
+        LambdaQueryWrapper<User> lambda = new QueryWrapper<User>().lambda();
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+     */
+    @Test
+    public void selectLambda(){
+        //LambdaQueryWrapper<User> lambda = new QueryWrapper<User>().lambda();
+        //LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+        lambdaQuery.like(User::getName,"雨").le(User::getAge,40);
+        List<User> users = userMapper.selectList(lambdaQuery);
+        users.forEach(System.out::println);
+    }
+
+    /*
+    名字王姓 且 （年龄小于40 或者邮箱不为空）
+     */
+    @Test
+    public void selectLambda2(){
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+        lambdaQuery.likeRight(User::getName,"王")
+        .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
+        ;
+        List<User> users = userMapper.selectList(lambdaQuery);
+        users.forEach(System.out::println);
+    }
+
+    /*
+    .list public interface ChainQuery<T> extends ChainWrapper<T> {
+    default List<T> list() {
+        return this.getBaseMapper().selectList(this.getWrapper());
+    }
+    是调用了selectList  只是换了种写法
+     */
+    @Test
+    public void selectLambda3(){
+        List<User> users = new LambdaQueryChainWrapper<User>(userMapper)
+                .like(User::getName,"雨")
+                .ge(User::getAge,25)
+                .list();
+        users.forEach(System.out::println);
+    }
+
+
+    /*
+    使用自定义查询
+     */
+    @Test
+    public void selectMy(){
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+        lambdaQuery.likeRight(User::getName,"王")
+                .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
+        ;
+        List<User> users = userMapper.selectAll(lambdaQuery);
+        users.forEach(System.out::println);
+    }
+
+
+
 
 
 }
