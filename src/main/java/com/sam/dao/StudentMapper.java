@@ -26,4 +26,16 @@ public interface StudentMapper extends BaseMapper<Student> {
     @Select("select * from student where 1=1 and " + "${ew.sqlSegment}")
     @ResultMap(value = "stuMap")
     List<Student> selectStudents(@Param("ew") QueryWrapper<Student> wrapper);
+
+
+
+    //@Results(id="prueStuMap",value={
+    //        @Result(property = "id", column = "id"),
+    //        @Result(property = "name", column = "name"),
+    //        @Result(property = "age", column = "age"),
+    //        @Result(property = "classId", column = "class_id"),
+    //        @Result(property = "createTime", column = "create_time"),
+    //})
+    @Select("select * from student where class_id = #{classId}")
+    List<Student> findStudentByClassId(int classId);
 }

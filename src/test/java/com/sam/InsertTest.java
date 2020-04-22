@@ -2,10 +2,12 @@ package com.sam;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sam.dao.MemberMapper;
+import com.sam.dao.StudentClassMapper;
 import com.sam.dao.StudentMapper;
 import com.sam.dao.UserMapper;
 import com.sam.entity.Member;
 import com.sam.entity.Student;
+import com.sam.entity.StudentClass;
 import com.sam.entity.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,9 @@ class InsertTest {
 
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private StudentClassMapper studentClassMapper;
 
     @Test
     void contextLoads() {
@@ -68,6 +73,18 @@ class InsertTest {
         ;
         List<Student> students = studentMapper.selectStudents(queryWrapper);
         students.forEach(System.out::println);
+    }
+
+
+    @Test
+    public void testStudentClassByWrapper(){
+        QueryWrapper<StudentClass> queryWrapper = new QueryWrapper<StudentClass>();
+        queryWrapper.lambda()
+                //.eq(Student::getAge,11)
+                .ge(StudentClass::getClassId,1)
+        ;
+        List<StudentClass> studentClasses = studentClassMapper.selectStudentClass(queryWrapper);
+        studentClasses.forEach(System.out::println);
     }
 
 
