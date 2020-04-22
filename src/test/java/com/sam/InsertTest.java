@@ -1,8 +1,11 @@
 package com.sam;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sam.dao.MemberMapper;
+import com.sam.dao.StudentMapper;
 import com.sam.dao.UserMapper;
 import com.sam.entity.Member;
+import com.sam.entity.Student;
 import com.sam.entity.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -24,6 +27,9 @@ class InsertTest {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
     @Test
     void contextLoads() {
@@ -50,7 +56,21 @@ class InsertTest {
         member.setManagerId(0L);
         int affectRowsNum = memberMapper.insert(member);
         System.out.println("影响记录数：" + affectRowsNum);
-
     }
+
+
+    @Test
+    public void testByWrapper(){
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<Student>();
+        queryWrapper.lambda()
+                //.eq(Student::getAge,11)
+                .ge(Student::getClassId,1)
+        ;
+        List<Student> students = studentMapper.selectStudents(queryWrapper);
+        students.forEach(System.out::println);
+    }
+
+
+
 
 }
