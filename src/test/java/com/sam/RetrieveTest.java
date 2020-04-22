@@ -272,7 +272,7 @@ limit 1
     可继续使用其他构造器 与实体是and关系
      */
     @Test
-    public void selectByWrapperEntity(){
+    public void selectByWrapperEntity() {
         User u = new User();
         u.setName("李艺伟");
         u.setEmail("lyw@baomidou.com");
@@ -280,7 +280,7 @@ limit 1
         //实体作为条件构造器构造方法的参数
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>(u);
         //可继续使用其他构造器 与实体是and关系
-        queryWrapper.eq("manager_id",1088248166370832385L).eq("name","李艺伟");
+        queryWrapper.eq("manager_id", 1088248166370832385L).eq("name", "李艺伟");
 
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
@@ -291,15 +291,15 @@ limit 1
 
      */
     @Test
-    public void selectByWrapperAllEq(){
+    public void selectByWrapperAllEq() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        Map<String,Object> params = new HashMap<>();
-        params.put("name","王天风");
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", "王天风");
         //params.put("age",25);
-        params.put("email",null);
+        params.put("email", null);
 
         //queryWrapper.allEq(params,false);
-        queryWrapper.allEq((k,v)->!k.equals("name"),params);
+        queryWrapper.allEq((k, v) -> !k.equals("name"), params);
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
     }
@@ -308,19 +308,20 @@ limit 1
     selectMaps 查询结果丢map里
      */
     @Test
-    public void selectByWrapperMaps(){
+    public void selectByWrapperMaps() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email").select("id","name");
-        List<Map<String,Object>> mapLists = userMapper.selectMaps(queryWrapper);
+        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email").select("id", "name");
+        List<Map<String, Object>> mapLists = userMapper.selectMaps(queryWrapper);
         mapLists.forEach(System.out::println);
     }
+
     /*
     selectObjs 查询第一列
      */
     @Test
-    public void selectByWrapperObjs(){
+    public void selectByWrapperObjs() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email").select("id","name");
+        queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email").select("id", "name");
         List<Object> mapLists = userMapper.selectObjs(queryWrapper);
         mapLists.forEach(System.out::println);
     }
@@ -329,20 +330,20 @@ limit 1
     count(1) 总记录数 不要写select字段
      */
     @Test
-    public void selectByWrapperCount(){
+    public void selectByWrapperCount() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         queryWrapper.like("name", "雨").between("age", 20, 40).isNotNull("email");
         Integer count = userMapper.selectCount(queryWrapper);
-        System.out.println("总记录数："+count);
+        System.out.println("总记录数：" + count);
     }
 
     /*
     selectOne
      */
     @Test
-    public void selectByWrapperOne(){
+    public void selectByWrapperOne() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        queryWrapper.like("name","张雨").lt("age",40);
+        queryWrapper.like("name", "张雨").lt("age", 40);
         User user = userMapper.selectOne(queryWrapper);
         System.out.println(user);
     }
@@ -355,11 +356,11 @@ limit 1
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
      */
     @Test
-    public void selectLambda(){
+    public void selectLambda() {
         //LambdaQueryWrapper<User> lambda = new QueryWrapper<User>().lambda();
         //LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
-        lambdaQuery.like(User::getName,"雨").le(User::getAge,40);
+        lambdaQuery.like(User::getName, "雨").le(User::getAge, 40);
         List<User> users = userMapper.selectList(lambdaQuery);
         users.forEach(System.out::println);
     }
@@ -368,10 +369,10 @@ limit 1
     名字王姓 且 （年龄小于40 或者邮箱不为空）
      */
     @Test
-    public void selectLambda2(){
+    public void selectLambda2() {
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
-        lambdaQuery.likeRight(User::getName,"王")
-        .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
+        lambdaQuery.likeRight(User::getName, "王")
+                .and(lqw -> lqw.lt(User::getAge, 40).or().isNotNull(User::getEmail))
         ;
         List<User> users = userMapper.selectList(lambdaQuery);
         users.forEach(System.out::println);
@@ -385,10 +386,10 @@ limit 1
     是调用了selectList  只是换了种写法
      */
     @Test
-    public void selectLambda3(){
+    public void selectLambda3() {
         List<User> users = new LambdaQueryChainWrapper<User>(userMapper)
-                .like(User::getName,"雨")
-                .ge(User::getAge,25)
+                .like(User::getName, "雨")
+                .ge(User::getAge, 25)
                 .list();
         users.forEach(System.out::println);
     }
@@ -398,10 +399,10 @@ limit 1
     使用自定义查询 带查询构建器
      */
     @Test
-    public void selectAll(){
+    public void selectAll() {
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
-        lambdaQuery.likeRight(User::getName,"王")
-                .and(lqw->lqw.lt(User::getAge,40).or().isNotNull(User::getEmail))
+        lambdaQuery.likeRight(User::getName, "王")
+                .and(lqw -> lqw.lt(User::getAge, 40).or().isNotNull(User::getEmail))
         ;
         List<User> users = userMapper.selectAll(lambdaQuery);
         users.forEach(System.out::println);
@@ -417,18 +418,87 @@ limit 1
     //}
 
 
+    /*
+        两条sql
+        返回实体类型
+     */
     @Test
-    public void selectPage(){
+    public void selectPage() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
-        queryWrapper.ge("age",25);
+        queryWrapper.ge("age", 25); // >=
 
-        Page<User> page = new Page<User>(1,2);
-        IPage<User> iPage = userMapper.selectPage(page,queryWrapper);
-        System.out.println("总页数："+iPage.getPages());
-        System.out.println("总记录数："+iPage.getTotal());
+        Page<User> page = new Page<User>(1, 3);
+        IPage<User> iPage = userMapper.selectPage(page, queryWrapper);
+        System.out.println("总页数：" + iPage.getPages());
+        System.out.println("总记录数：" + iPage.getTotal());
         iPage.getRecords().forEach(System.out::println);
     }
 
+    /*
+        两条sql
+        返回Map类型
+     */
+    @Test
+    public void selectMapsPage() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.ge("age", 25); // >=
+
+        IPage<Map<String, Object>> page = new Page<>(1, 3);
+        IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
+        System.out.println("总页数：" + iPage.getPages());
+        System.out.println("总记录数：" + iPage.getTotal());
+        iPage.getRecords().forEach(System.out::println);
+    }
+
+    /*
+        1条sql
+        不要总记录数
+        返回Map类型
+     */
+    @Test
+    public void selectMapsPageFalse() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.ge("age", 25); // >=
+
+        IPage<Map<String, Object>> page = new Page<>(1, 3, false);
+        IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
+        System.out.println("总页数：" + iPage.getPages());
+        System.out.println("总记录数：" + iPage.getTotal());
+        iPage.getRecords().forEach(System.out::println);
+    }
+
+
+    /*
+    两条sql
+    返回实体类型
+ */
+    @Test
+    public void selectUserPage() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.ge("age", 25); // >=
+
+        Page<User> page = new Page<User>(1, 3);
+        IPage<User> iPage = userMapper.selectUserPage(page, queryWrapper);
+        System.out.println("总页数：" + iPage.getPages());
+        System.out.println("总记录数：" + iPage.getTotal());
+        iPage.getRecords().forEach(System.out::println);
+    }
+
+        /*
+    两条sql
+    返回Map类型
+    */
+    @Test
+    public void selectUserJoinPage() {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
+        queryWrapper.ge("age", 25); // >=
+
+        IPage<Map<String, Object>> page = new Page<>(1, 3, false);
+        IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
+        System.out.println("总页数：" + iPage.getPages());
+        System.out.println("总记录数：" + iPage.getTotal());
+        iPage.getRecords().forEach(System.out::println);
+    }
 
 
 }

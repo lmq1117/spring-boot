@@ -1,6 +1,8 @@
 package com.sam;
 
+import com.sam.dao.MemberMapper;
 import com.sam.dao.UserMapper;
+import com.sam.entity.Member;
 import com.sam.entity.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,9 @@ class InsertTest {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private MemberMapper memberMapper;
+
     @Test
     void contextLoads() {
 
@@ -31,6 +36,21 @@ class InsertTest {
         user.setCreateTime(LocalDateTime.now());
         int affectRowsNum = userMapper.insert(user);
         System.out.println("影响记录数：" + affectRowsNum);
+    }
+
+    @Test
+    public void insertMember(){
+        Member member = new Member();
+        //member.setId(1L);
+        member.setName("王小二");
+        member.setAge(20);
+        member.setCreateTime(LocalDateTime.now());
+        member.setEmail("wangxiaoer@qq.com");
+        member.setUserId(1L);
+        member.setManagerId(0L);
+        int affectRowsNum = memberMapper.insert(member);
+        System.out.println("影响记录数：" + affectRowsNum);
+
     }
 
 }

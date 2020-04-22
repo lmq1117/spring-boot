@@ -26,4 +26,13 @@
 <!--        ${ew.customSqlSegment}-->
 <!--    </select>-->
 
+
+    <select id="selectUserPage" resultType="com.sam.entity.User">
+        select * from user ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectUserJoinPage" resultType="Map">
+        select * from user ${ew.customSqlSegment}
+    </select>
+
 </mapper>
