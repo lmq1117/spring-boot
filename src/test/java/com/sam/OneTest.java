@@ -42,7 +42,7 @@ class OneTest {
     }
 
     /**
-     * 一对一关系 复用result 无效
+     * 一对一关系 一个学生 对应一个班级
      */
     @Test
     public void testByWrapper2() {
