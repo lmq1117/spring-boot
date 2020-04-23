@@ -11,17 +11,20 @@ import java.util.List;
 
 public interface StudentClassMapper extends BaseMapper<StudentClass> {
 
+
+
+
+    @Select("select * from student_class where 1=1 and " + "${ew.sqlSegment}")
     @Results(id = "stuClassMap", value = {
             @Result(property = "classId", column = "class_id"),
             @Result(property = "className", column = "class_name"),
             @Result(property = "createTime", column = "create_time"),
-            @Result(property = "studentSet", column = "class_id",javaType = Student.class, many = @Many(select = "com.sam.dao.StudentMapper.findStudentByClassId", fetchType = FetchType.EAGER)),
+            @Result(property = "students", column = "class_id",
+                    many = @Many(select = "com.sam.dao.StudentMapper.findStudentByClassId", fetchType = FetchType.EAGER)),
     })
-    @Select("select * from student_class where class_id = #{classId}")
-    Student findStudentClassById(int classId);
-
-
-    @Select("select * from student_class where 1=1 and " + "${ew.sqlSegment}")
-    @ResultMap("stuClassMap")
     List<StudentClass> selectStudentClass(@Param("ew") QueryWrapper<StudentClass> wrapper);
+
+    @Select("select * from student_class where 1 and " + "${ew.sqlSegment}")
+    @ResultMap("stuClassMap")
+    List<StudentClass> selectStudentClassTwo(@Param("ew") QueryWrapper<StudentClass> wrapper);
 }

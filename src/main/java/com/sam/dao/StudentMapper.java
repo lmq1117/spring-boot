@@ -12,7 +12,8 @@ public interface StudentMapper extends BaseMapper<Student> {
 
 
     @Results(id = "stuMap", value = {
-            @Result(property = "id", column = "id"),
+            //id = true 表示它 是主键
+            @Result(id = true, property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "age", column = "age"),
             @Result(property = "classId", column = "class_id"),
@@ -28,14 +29,11 @@ public interface StudentMapper extends BaseMapper<Student> {
     List<Student> selectStudents(@Param("ew") QueryWrapper<Student> wrapper);
 
 
-
-    //@Results(id="prueStuMap",value={
-    //        @Result(property = "id", column = "id"),
-    //        @Result(property = "name", column = "name"),
-    //        @Result(property = "age", column = "age"),
-    //        @Result(property = "classId", column = "class_id"),
-    //        @Result(property = "createTime", column = "create_time"),
-    //})
+    /**
+     * 根据班级Id查询学生信息
+     * @param classId
+     * @return
+     */
     @Select("select * from student where class_id = #{classId}")
     List<Student> findStudentByClassId(int classId);
 }

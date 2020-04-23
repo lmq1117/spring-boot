@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -29,5 +30,13 @@ public class StudentClass {
     private LocalDateTime createTime;
 
     @TableField(exist = false)
-    private Set<Student> studentSet;
+    private List<Student> students;
+
+    //public void setStudents(List<Student> students) {
+    //    this.students = students;
+    //}
+    //
+    //public List<Student> getStudents() {
+    //    return students;
+    //}
 }
