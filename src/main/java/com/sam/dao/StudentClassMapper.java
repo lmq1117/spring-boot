@@ -24,7 +24,7 @@ public interface StudentClassMapper extends BaseMapper<StudentClass> {
     })
     List<StudentClass> selectStudentClass(@Param("ew") QueryWrapper<StudentClass> wrapper);
 
-    @Select("select * from student_class where 1 and " + "${ew.sqlSegment}")
+    @Select("select sc.* from student_class sc inner join student s on sc.class_id = s.class_id where 1 and " + "${ew.sqlSegment}")
     @ResultMap("stuClassMap")
     List<StudentClass> selectStudentClassTwo(@Param("ew") QueryWrapper<StudentClass> wrapper);
 }

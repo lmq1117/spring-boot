@@ -81,9 +81,9 @@ class OneTest {
     @Test
     public void testStudentClassByWrapper2() {
         QueryWrapper<StudentClass> queryWrapper = new QueryWrapper<StudentClass>();
-        queryWrapper.lambda()
+        queryWrapper
                 //.eq(Student::getAge,11)
-                .ge(StudentClass::getClassId, 1)
+                .ge("s.class_id", 1)
         ;
         List<StudentClass> studentClasses = studentClassMapper.selectStudentClassTwo(queryWrapper);
         //studentClasses.forEach(System.out::println);
