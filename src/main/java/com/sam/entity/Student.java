@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "student")
-public class Student {
+public class Student extends BaseEntity {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -33,6 +34,8 @@ public class Student {
     private LocalDateTime createTime;
 
     @TableField(exist = false)
+    @CustomOne(related = "student_class",foreignKey = "class_id",localKey = "class_id")
     private StudentClass studentClass;
+
 
 }

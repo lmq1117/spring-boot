@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName(value = "student_class")
-public class StudentClass {
+public class StudentClass extends BaseEntity {
 
 
     @TableId(value = "class_id", type = IdType.AUTO)
