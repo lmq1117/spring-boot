@@ -34,7 +34,7 @@ public class User {
     @Column(length = 12)
     private Integer age;
 
-    private Date createdAt, updatedAt;
+    //private Date createdAt, updatedAt;
 
 
     //private String address;
@@ -66,6 +66,16 @@ public class User {
     public User(String name,Integer age){
         this.name = name;
         this.age = age;
+    }
+
+    public User(){
+
+    }
+
+    public User(Integer id,String name,Integer age){
+        this.name = name;
+        this.age = age;
+        this.id = id;
     }
 
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserTableSeeder {
+public class UserTableSeeder implements Runnable {
 
     //@Autowired
     private UserMapper userMapper;
@@ -42,6 +42,10 @@ public class UserTableSeeder {
         this.userMapper = userMapper;
     }
 
+    public UserTableSeeder(){
+
+    }
+
 
     public void seed() {
         seedUserTable();
@@ -62,5 +66,10 @@ public class UserTableSeeder {
         for (User user : data) {
             userMapper.insert(user);
         }
+    }
+
+    @Override
+    public void run() {
+
     }
 }

@@ -14,8 +14,17 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.sam.dao.UserMapper;
 import com.sam.database.seeds.UserTableSeeder;
+import com.sam.entity.User;
+import com.sam.service.HelloService;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,28 +33,41 @@ import java.util.Scanner;
 
 
 //代码自动生成器
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class CodeGenerate {
     private static List<String> ops = Arrays.asList("seed","truncate","generateCode");
 
+    //@Autowired
+    //UserMapper userMapper;
 
 
-    public static void main(String[] args) {
 
-        String op = scanner("操作名,"+ ops.toString());
+    public static void dsfd(String[] args) {
+        SpringApplication.run(Application.class,args).close();
 
-        switch (op){
-            case "seed":
-                String tableName = scanner("表名");
-                new UserTableSeeder().seed();
-                System.out.println("你是要填充数据");
-                break;
-            case "truncate":
-                System.out.println("你是想清空数据");
-                break;
-            default:
-                System.out.println("少年,请检查操作类型,Bye");
-        }
-        if(op == "generateCode"){
+
+        //HelloService helloService = new HelloService();
+        //helloService.hello();
+
+
+        //String op = scanner("操作名,"+ ops.toString());
+
+        /*
+
+        //switch (op){
+        //    case "seed":
+        //        String tableName = scanner("表名");
+        //        new UserTableSeeder().seed();
+        //        System.out.println("你是要填充数据");
+        //        break;
+        //    case "truncate":
+        //        System.out.println("你是想清空数据");
+        //        break;
+        //    default:
+        //        System.out.println("少年,请检查操作类型,Bye");
+        //}
+        //if(op == "generateCode"){
             //构建代码生成器对象
             AutoGenerator mpg = new AutoGenerator();
 
@@ -123,7 +145,9 @@ public class CodeGenerate {
 
             //执行
             mpg.execute();
-        }
+        //}
+
+         */
 
 
 
@@ -134,17 +158,23 @@ public class CodeGenerate {
     }
 
 
-    public static String scanner(String tip) {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (StringUtils.isNotEmpty(ipt)) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException("请输入正确的" + tip + "！");
+    @Test
+    void sout(){
+        System.out.println("#######sdafd####");
     }
+
+
+    //public static String scanner(String tip) {
+    //    Scanner scanner = new Scanner(System.in);
+    //    StringBuilder help = new StringBuilder();
+    //    help.append("请输入" + tip + "：");
+    //    System.out.println(help.toString());
+    //    if (scanner.hasNext()) {
+    //        String ipt = scanner.next();
+    //        if (StringUtils.isNotEmpty(ipt)) {
+    //            return ipt;
+    //        }
+    //    }
+    //    throw new MybatisPlusException("请输入正确的" + tip + "！");
+    //}
 }
