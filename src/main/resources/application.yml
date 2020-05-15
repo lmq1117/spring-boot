@@ -22,7 +22,7 @@ spring:
     show-sql: true
     database-platform: mysql
     hibernate:
-      #每次项目启动时数据库初始化策略
+    #每次项目启动时数据库初始化策略
       ddl-auto: update
     properties:
       hibernate:
