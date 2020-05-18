@@ -29,7 +29,7 @@ public class DbSeedImpl implements DbSeed {
         seedUserTable();
     }
 
-    public void down(){
+    public void down() {
         deleteUserTable();
     }
 
@@ -40,66 +40,70 @@ public class DbSeedImpl implements DbSeed {
     //}
 
 
-    private void seedUserTable(){
+    private void seedUserTable() {
         System.out.println("###seedUserTable被执行了###");
         List<User> data = Arrays.asList(
-                new User(1,"刘备", 58),
-                new User(2,"关羽", 55),
-                new User(3,"张飞", 51),
-                new User(4,"赵云", 38),
-                new User(5,"黄忠", 70),
-                new User(6,"马超", 32),
-                new User(7,"孔明", 50),
-                new User(8,"糜夫人", 57),
-                new User(9,"孙夫人", 32),
-                new User(10,"阿斗", 22),
-                new User(11,"曹操", 58),
-                new User(12,"许褚", 58),
-                new User(13,"荀彧", 58),
-                new User(14,"张辽", 58),
-                new User(15,"曹丕", 30)
+                new User(1, "刘备", 58),
+                new User(2, "关羽", 55),
+                new User(3, "张飞", 51),
+                new User(4, "赵云", 38),
+                new User(5, "黄忠", 70),
+                new User(6, "马超", 32),
+                new User(7, "孔明", 50),
+                new User(8, "糜夫人", 57),
+                new User(9, "孙夫人", 32),
+                new User(10, "阿斗", 22),
+                new User(11, "曹操", 58),
+                new User(12, "许褚", 58),
+                new User(13, "荀彧", 58),
+                new User(14, "张辽", 58),
+                new User(15, "曹丕", 30)
         );
 
-        data.forEach((user)->{
-            if(0 == userMapper.selectList(new QueryWrapper<User>(user)).size()){
+        data.forEach((user) -> {
+            if (0 == userMapper.selectList(new QueryWrapper<User>(user)).size()) {
                 userMapper.insert(user);
-                System.out.println("插入了"+user.toString());
+                System.out.println("插入了" + user.toString());
             }
         });
 
     }
 
 
-    private void deleteUserTable(){
+    private void deleteUserTable() {
         List<User> data = Arrays.asList(
-                new User("刘备", 58),
-                new User("关羽", 55),
-                new User("张飞", 51),
-                new User("赵云", 38),
-                new User("黄忠", 70),
-                new User("马超", 32),
-                new User("孔明", 50),
-                new User("糜夫人", 57),
-                new User("孙夫人", 32),
-                new User("阿斗", 22),
-                new User("曹操", 58),
-                new User("许褚", 58),
-                new User("荀彧", 58),
-                new User("张辽", 58),
-                new User("曹丕", 30)
+                new User(1, "刘备", 58),
+                new User(2, "关羽", 55),
+                new User(3, "张飞", 51),
+                new User(4, "赵云", 38),
+                new User(5, "黄忠", 70),
+                new User(6, "马超", 32),
+                new User(7, "孔明", 50),
+                new User(8, "糜夫人", 57),
+                new User(9, "孙夫人", 32),
+                new User(10, "阿斗", 22),
+                new User(11, "曹操", 58),
+                new User(12, "许褚", 58),
+                new User(13, "荀彧", 58),
+                new User(14, "张辽", 58),
+                new User(15, "曹丕", 30)
         );
         List<Integer> ids = new ArrayList<>();
-        data.forEach((u)->{
+        data.forEach((u) -> {
             List<User> users = userMapper.selectList(new QueryWrapper<User>(u));
-            if(0 < users.size()){
-                 users.stream().map(user->user.getId()).collect(Collectors.toList()).forEach(
+            if (0 < users.size()) {
+                users.stream().map(user -> user.getId()).collect(Collectors.toList()).forEach(
                         s -> ids.add(s)
                 );
+
+                //users.stream().map(
+                //        user -> ids.add(user.getId())
+                //);
                 //ids.add(user.getId());
-                System.out.println("ids"+ids.toString());
+                System.out.println("ids" + ids.toString());
             }
         });
-        if(ids.size() > 0){
+        if (ids.size() > 0) {
             userMapper.deleteBatchIds(ids);
             System.out.println(ids.toString());
         }

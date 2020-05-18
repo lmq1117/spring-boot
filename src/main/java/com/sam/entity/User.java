@@ -20,7 +20,7 @@ public class User {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id;
 
     //用户姓名
