@@ -1,7 +1,9 @@
 package com.sam;
 
 import com.sam.dao.UserMapper;
+import com.sam.database.seeds.DbSeed;
 import com.sam.entity.User;
+import com.sam.service.HelloService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,23 @@ class ApplicationTests {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    HelloService helloService;
+
+    @Autowired
+    DbSeed dbSeed;
+
+
+    @Test
+    void serviceTest(){
+        helloService.hello();
+    }
+
+    @Test
+    void DbSeedTest(){
+        dbSeed.up();
+    }
+
 //    @Test
     void contextLoads() {
 
@@ -30,7 +49,7 @@ class ApplicationTests {
 
     }
 
-//    @Test
+    //@Test
     @Transactional
     @Rollback(false)
     void truncate(){
@@ -40,7 +59,7 @@ class ApplicationTests {
 
 
     //提交事务 测试结果保存在数据库
-    @Test
+    //@Test
     @Transactional
     @Rollback(true)
     void seed(){
@@ -88,6 +107,7 @@ class ApplicationTests {
     void hello(){
         User user = new User();
         try {
+            System.out.println("##sleep 1000ms #");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();

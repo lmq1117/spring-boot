@@ -1,54 +1,38 @@
 package com.sam;
 
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.po.TableFill;
-import com.baomidou.mybatisplus.generator.config.rules.DateType;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.sam.dao.UserMapper;
-import com.sam.database.seeds.UserTableSeeder;
+import com.sam.database.seeds.DbSeed;
 import com.sam.entity.User;
 import com.sam.service.HelloService;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 
 //代码自动生成器
-@SpringBootTest
-@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@RunWith(SpringRunner.class)
+@Service
 public class CodeGenerate {
     private static List<String> ops = Arrays.asList("seed","truncate","generateCode");
 
-    //@Autowired
-    //UserMapper userMapper;
+    @Autowired
+    static UserMapper userMapper;
 
 
 
-    public static void dsfd(String[] args) {
-        SpringApplication.run(Application.class,args).close();
+    public static void main(String[] args) {
+        //SpringApplication.run(Application.class,args).close();
+        userMapper.insert(new User("小花mm",25));
 
 
-        //HelloService helloService = new HelloService();
-        //helloService.hello();
 
 
         //String op = scanner("操作名,"+ ops.toString());
@@ -158,10 +142,12 @@ public class CodeGenerate {
     }
 
 
-    @Test
-    void sout(){
-        System.out.println("#######sdafd####");
-    }
+    //@Test
+    //void sout(){
+    //    System.out.println("#######sdafd####");
+    //}
+
+
 
 
     //public static String scanner(String tip) {

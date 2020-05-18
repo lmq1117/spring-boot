@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sam.dao.UserMapper;
 import com.sam.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class UserTableSeeder implements Runnable {
 
     //@Autowired
@@ -70,6 +72,8 @@ public class UserTableSeeder implements Runnable {
 
     @Override
     public void run() {
-
+        for (User user : data) {
+            userMapper.insert(user);
+        }
     }
 }

@@ -1,31 +1,43 @@
-package com.sam.database.seeds;
+package com.sam.database.seeds.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sam.dao.UserMapper;
+import com.sam.database.seeds.DbSeed;
 import com.sam.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Component
-public class DatabaseSeeder {
-    private UserMapper userMapper;
+//import static sun.jvm.hotspot.runtime.BasicObjectLock.size;
+
+@Service
+public class DbSeedImpl implements DbSeed {
+
 
     @Autowired
-    public DatabaseSeeder(UserMapper userMapper){
-        this.userMapper = userMapper;
+    UserMapper userMapper;
+
+    @Override
+    public void up() {
+        seedUserTable();
     }
 
-    @EventListener
-    public void seed(ContextRefreshedEvent event){
+    public void down(){
         deleteUserTable();
-        //seedUserTable();
     }
+
+    //@EventListener
+    //public void seed(ContextRefreshedEvent event){
+    //    //deleteUserTable();
+    //    seedUserTable();
+    //}
 
 
     private void seedUserTable(){
@@ -60,26 +72,30 @@ public class DatabaseSeeder {
 
     private void deleteUserTable(){
         List<User> data = Arrays.asList(
-                new User(1,"刘备", 58),
-                new User(2,"关羽", 55),
-                new User(3,"张飞", 51),
-                new User(4,"赵云", 38),
-                new User(5,"黄忠", 70),
-                new User(6,"马超", 32),
-                new User(7,"孔明", 50),
-                new User(8,"糜夫人", 57),
-                new User(9,"孙夫人", 32),
-                new User(10,"阿斗", 22),
-                new User(11,"曹操", 58),
-                new User(12,"许褚", 58),
-                new User(13,"荀彧", 58),
-                new User(14,"张辽", 58),
-                new User(15,"曹丕", 30)
+                new User("刘备", 58),
+                new User("关羽", 55),
+                new User("张飞", 51),
+                new User("赵云", 38),
+                new User("黄忠", 70),
+                new User("马超", 32),
+                new User("孔明", 50),
+                new User("糜夫人", 57),
+                new User("孙夫人", 32),
+                new User("阿斗", 22),
+                new User("曹操", 58),
+                new User("许褚", 58),
+                new User("荀彧", 58),
+                new User("张辽", 58),
+                new User("曹丕", 30)
         );
         List<Integer> ids = new ArrayList<>();
-        data.forEach((user)->{
-            if(0 < userMapper.selectList(new QueryWrapper<User>(user)).size()){
-                ids.add(user.getId());
+        data.forEach((u)->{
+            List<User> users = userMapper.selectList(new QueryWrapper<User>(u));
+            if(0 < users.size()){
+                 users.stream().map(user->user.getId()).collect(Collectors.toList()).forEach(
+                        s -> ids.add(s)
+                );
+                //ids.add(user.getId());
                 System.out.println("ids"+ids.toString());
             }
         });

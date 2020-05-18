@@ -13,7 +13,11 @@ spring:
       max-wait: 60000
       min-evictable-idle-time-millis: 300000
       validation-query:
-#    initialization-mode: always
+      filter:
+        commons-log:
+          statement-log-enabled: true
+          statement-executable-sql-log-enable: true
+  #    initialization-mode: always
 #    schema: classpath:schema.sql
 #    data: classpath:data.sql
   # jpa 配置
