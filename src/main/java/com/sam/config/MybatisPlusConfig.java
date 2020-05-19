@@ -15,4 +15,8 @@ public class MybatisPlusConfig {
     public MyMethodInjector myMethodInjector(){
         return new MyMethodInjector();
     }
+
+    //public PerformanceInterceptor performanceInterceptor(){
+    //    return new Performance();
+    //}
 }

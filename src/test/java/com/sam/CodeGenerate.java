@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,9 +30,11 @@ public class CodeGenerate {
 
 
     public static void main(String[] args) {
-        //SpringApplication.run(Application.class,args).close();
-        userMapper.insert(new User("小花mm",25));
+        ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
+        //userMapper.insert(new User("小花mm",25));
 
+
+        run.close();
 
 
 

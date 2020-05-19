@@ -1,19 +1,22 @@
 package com.sam.entity;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class User {
+public class User implements Serializable {
 
     /**
      * 用户id 主键自增
@@ -24,17 +27,20 @@ public class User {
     private Integer id;
 
     //用户姓名
-    @Column(length = 100,nullable = false)
+    @Column(length = 100, nullable = false,columnDefinition="")
     @ColumnDefault(value = "''")
     private String name;
-
 
 
     @ColumnDefault(value = "0")
     @Column(length = 12)
     private Integer age;
 
-    //private Date createdAt, updatedAt;
+    //@TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date createdAt;
+
+    //@TableField(fill = FieldFill.UPDATE)
+    private Date updatedAt;
 
 
     //private String address;
@@ -62,21 +68,21 @@ public class User {
     //@ColumnDefault("0.0")
     //private Float weight;
 
-    public User(){
-
-    }
-
-    public User(String name,Integer age){
-        this.name = name;
-        this.age = age;
-    }
-
-
-    public User(Integer id,String name,Integer age){
-        this.name = name;
-        this.age = age;
-        this.id = id;
-    }
+    //public User() {
+    //
+    //}
+    //
+    //public User(String name, Integer age) {
+    //    this.name = name;
+    //    this.age = age;
+    //}
+    //
+    //
+    //public User(Integer id, String name, Integer age) {
+    //    this.name = name;
+    //    this.age = age;
+    //    this.id = id;
+    //}
 
 
 }

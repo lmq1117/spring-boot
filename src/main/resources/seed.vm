@@ -1,0 +1,33 @@
+#set($greet = 'hello')
+#set($gn = 'id')
+#set($parameterListLength = 'id')
+$greet $name
+###foreach($i in $lists)
+##    $i.name
+###end
+#evaluate("\$item.$gn")
+
+package com.sam.database.seeds;
+
+import com.sam.entity.User;
+import java.util.Arrays;
+import java.util.List;
+
+public class UserTableSeeder {
+
+public static List
+<User> data = Arrays.asList(
+    new User(1, "刘备", 58, null, null),
+    new User(2, "张飞", 58, null, null),
+    #foreach($item in $lists)
+        new User(
+        #foreach($parameterName in $parameterList)
+            #evaluate("\$item.$parameterName")
+            #if($foreach.count < $parameterList.size())
+            ,
+            #end
+        #end
+        ),
+    #end
+    );
+    }

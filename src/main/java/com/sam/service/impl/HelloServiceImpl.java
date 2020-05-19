@@ -7,7 +7,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
 @Service
 @MapperScan("com.sam.dao")
@@ -17,7 +16,7 @@ public class HelloServiceImpl implements HelloService {
 
 
     public void hello(){
-        userMapper.insert(new User("小猫",23));
-        userMapper.insert(new User("小花",25));
+        //userMapper.insert(new User("小猫",23));
+        //userMapper.insert(new User("小花",25));
     }
 }
