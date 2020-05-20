@@ -15,19 +15,11 @@ import java.util.List;
 
 public class UserTableSeeder {
 
-public static List
-<User> data = Arrays.asList(
+public static List<User> data = Arrays.asList(
     new User(1, "刘备", 58, null, null),
     new User(2, "张飞", 58, null, null),
     #foreach($item in $lists)
-        new User(
-        #foreach($parameterName in $parameterList)
-            #evaluate("\$item.$parameterName")
-            #if($foreach.count < $parameterList.size())
-            ,
-            #end
-        #end
-        ),
+        new User(#foreach($parameterName in $parameterList)#evaluate("\$item.$parameterName")#if($foreach.count < $parameterList.size()),#end#end)#if($foreach.count < $lists.size()),#end
     #end
     );
     }

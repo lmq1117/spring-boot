@@ -23,10 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.jar.JarOutputStream;
 
 import org.apache.commons.lang3.SerializationUtils;
@@ -112,6 +109,11 @@ class DbSeedTests {
         List<String> parameterList = new ArrayList<>();
         for (Parameter parameter : parameters
         ) {
+
+            //HashMap<String, String> stringStringHashMap = new HashMap<>();
+            //stringStringHashMap.put(parameter.getName(),parameter.getType().toString());
+            //parameterList.add( stringStringHashMap);
+
             parameterList.add( parameter.getName());
             System.out.println("get" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, parameter.getName()) + ",");
         }
