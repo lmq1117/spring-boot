@@ -6,6 +6,7 @@ import com.google.common.io.BaseEncoding;
 import com.sam.dao.UserMapper;
 import com.sam.database.seeds.DbSeed;
 import com.sam.entity.User;
+import com.sam.service.HelloService;
 import com.sam.utils.SerializeUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -39,6 +40,9 @@ class DbSeedTests {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    HelloService helloService;
+
 
     //@Test
     void reflect() {
@@ -66,7 +70,7 @@ class DbSeedTests {
     }
 
     @Test
-    void iSeed() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    void iSeed() throws IllegalAccessException {
 
 
         //初始化模板引擎
@@ -78,103 +82,56 @@ class DbSeedTests {
         Template t = ve.getTemplate("seed.vm");
         //设置变量
         VelocityContext ctx = new VelocityContext();
-        ctx.put("entityName","User");
+        ctx.put("entityName", "User");
         List<User> users = userMapper.selectList(null);
-        ctx.put("name","sam");
-        ctx.put("lists",users);
+        ctx.put("name", "sam");
+        ctx.put("lists", users);
 
-
-
-        //System.out.println(rootPath);
-
-
-        //List<User> users = userMapper.selectList(null);
-        User user0 = users.get(0);
-
-        //序列化方式实现 可读性不好 pass
-        //byte[] bytes = SerializationUtils.serialize(user0);
-        //String encodeStr = BaseEncoding.base64().encode(bytes);
-        //System.out.println("序列化后base64encode："+encodeStr);
-        //byte[] decodeBytes = BaseEncoding.base64().decode(encodeStr);
-        //Object deserialize = SerializationUtils.deserialize(decodeBytes);
-        //System.out.println("base64decode后反序列化："+deserialize);
-
-
-        Class user0Class = user0.getClass();
-        Constructor[] cons = user0Class.getDeclaredConstructors();
-        Constructor con = cons[1];//取其有参构造
-        Class[] parameterTypes = con.getParameterTypes(); //构造方法参数集但是 数组类型显示特殊
-        Parameter[] parameters = con.getParameters();
-
+        //根据查询结果生成new Entity全参构造函数语句
         List<String> parameterList = new ArrayList<>();
-        for (Parameter parameter : parameters
-        ) {
+        for (User user : users) {
+            StringBuilder stringBuilder = new StringBuilder("new User(");
+            Field[] declaredFields = user.getClass().getDeclaredFields();
+            for (int i = 0; i < declaredFields.length; i++) {
+                declaredFields[i].setAccessible(true);
+                //给字符类型的字段加上""
+                if (declaredFields[i].getType().toString().endsWith("String")) {
+                    stringBuilder.append("\"");
+                    stringBuilder.append(declaredFields[i].get(user));
+                    stringBuilder.append("\"");
+                    if (i < declaredFields.length - 1) {
+                        stringBuilder.append(",");
+                    }
+                } else {
+                    stringBuilder.append(declaredFields[i].get(user));
+                    if (i < declaredFields.length - 1) {
+                        stringBuilder.append(",");
+                    }
+                }
 
-            //HashMap<String, String> stringStringHashMap = new HashMap<>();
-            //stringStringHashMap.put(parameter.getName(),parameter.getType().toString());
-            //parameterList.add( stringStringHashMap);
 
-            parameterList.add( parameter.getName());
-            System.out.println("get" + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, parameter.getName()) + ",");
-        }
-        System.out.println(parameterList);
-        Joiner joiner = Joiner.on(",").skipNulls();
-        String parameterString = joiner.join(parameterList);
-
-
-        System.out.println(parameters.length);
-        //int length = parameterTypes.length;
-        System.out.println("#################");
-        //System.out.println(parameterTypes[0]);
-        //System.out.println(parameterTypes[1]);
-        //System.out.println(parameterTypes[2]);
-        //System.out.println(parameterTypes[3]);
-        //System.out.println(parameterTypes[4]);
-        Object newUser = con.newInstance(user0.getId(), user0.getName(), user0.getAge(), user0.getCreatedAt(), user0.getUpdatedAt());
-        System.out.println((User) newUser);
-
-        Field[] fields = user0Class.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            System.out.println(field.getName());
-            //Object obj = c.newInstance();
-            //System.out.println(field.get(user0));
+            }
+            stringBuilder.append(")");
+            parameterList.add(stringBuilder.toString());
         }
 
 
-        //c.getDeclaredConstructor();
-        //c.getConstructor();
-
-        //Constructor constructor = c.getConstructor();
 
 
-        //constructor.newInstance()
-
-
-        //String serialize = SerializeUtils.serialize(user0);
-        //System.out.println(serialize);
-        //Object o = SerializeUtils.serializeToObject(serialize);
-        //System.out.println((User)o);
-        //System.out.println(SerializeUtils.serialize(user0));
-
-        //merge(t,ctx,rootPath+"/java/com/sam/database/seeds/UsersTableSeeder.java");
-
-        //System.out.println(sw.toString());
-
-        ctx.put("parameterString",parameterString);
-        ctx.put("parameterList",parameterList);
-        ctx.put("parameterListLength",parameterList.size());
+        ctx.put("parameterList", parameterList);
         StringWriter sw = new StringWriter();
-        t.merge(ctx,sw);
+        t.merge(ctx, sw);
 
-        //
         String rootPath = this.getClass().getClassLoader().getResource("").getFile() + "../../src/main";
-        merge(t,ctx,rootPath+"/java/com/sam/database/seeds/User2TableSeeder.java");
+        merge(t, ctx, rootPath + "/java/com/sam/database/seeds/UserTableSeeder.java");
         System.out.println("generate seed file success");
 
 
-
     }
+
+    //private List<T> List<String> generateNewConstruct(){
+    //
+    //}
 
     private void merge(Template template, VelocityContext ctx, String path) {
         PrintWriter writer = null;
@@ -190,19 +147,24 @@ class DbSeedTests {
     }
 
 
-    //@Test
-    //void up() {
-    //    dbSeed.up();
-    //}
-    //
-    //
-    //@Test
-    //void down() {
-    //    dbSeed.down();
-    //}
-    //
-    //@Test
-    //void truncate() {
-    //    userMapper.truncate();
-    //}
+    @Test
+    void up() {
+        dbSeed.up();
+    }
+
+
+    @Test
+    void down() {
+        dbSeed.down();
+    }
+
+    @Test
+    void truncate() {
+        userMapper.truncate();
+    }
+
+    @Test
+    void hello() {
+        helloService.hello();
+    }
 }

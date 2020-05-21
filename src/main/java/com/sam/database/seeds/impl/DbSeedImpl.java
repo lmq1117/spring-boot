@@ -6,9 +6,6 @@ import com.sam.database.seeds.DbSeed;
 import com.sam.database.seeds.UserTableSeeder;
 import com.sam.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//import static sun.jvm.hotspot.runtime.BasicObjectLock.size;
 
 @Service
 public class DbSeedImpl implements DbSeed {
@@ -27,7 +23,13 @@ public class DbSeedImpl implements DbSeed {
 
     @Override
     public void up() {
-        seedUserTable(UserTableSeeder.data);
+
+        List<User> data2 = UserTableSeeder.data;
+        data2.add(new User(5,"阿黄",22,null,null));
+        data2.add(new User(6,"阿黄1",22,null,null));
+        data2.add(new User(7,"阿黄2",22,null,null));
+        seedTable(data2);
+        //seedTable(LoanTableSeeder.data);
     }
 
     public void down() {
@@ -41,12 +43,7 @@ public class DbSeedImpl implements DbSeed {
     //}
 
 
-    private <T> void seedUserTable(List<User> data) {
-        //System.out.println("###seedUserTable被执行了###");
-        //List<T> data = Arrays.asList(
-        //
-        //);
-
+    private <T> void seedTable(List<User> data) {
         data.forEach((user) -> {
             if (0 == userMapper.selectList(new QueryWrapper<>(user)).size()) {
                 userMapper.insert(user);

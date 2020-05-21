@@ -15,8 +15,8 @@ public class HelloServiceImpl implements HelloService {
     UserMapper userMapper;
 
 
-    public void hello(){
-        //userMapper.insert(new User("小猫",23));
-        //userMapper.insert(new User("小花",25));
+    public void hello() {
+        userMapper.insert(new User(16, "小猫", 23, null, null));
+        userMapper.insert(new User(17, "小花", 25, null, null));
     }
 }
