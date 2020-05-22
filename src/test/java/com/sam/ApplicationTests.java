@@ -34,7 +34,7 @@ class ApplicationTests {
      */
     @Test
     void insertUserTest() {
-        User user = new User(19, "王小二", 20, "xiaoer@qq.com",null);
+        User user = new User(19, "王小二", 20, "xiaoer@qq.com",null,null);
         int rows = userMapper.insertUser(user);
         System.out.println("影响行数是：" + rows);
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     public boolean saveUserService(User user){
         //User user = new User("阿黄", 20, "ahuang@qq.com");
-        int count = baseMapper.insertUser(user);
+        int count = baseMapper.insert(user);
         if(count > 0){
             return true;
         } else {
@@ -22,11 +22,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     public List<User> getAllUser(){
-        return baseMapper.getAllUser();
+        return baseMapper.selectList(null);
     }
 
     public boolean updateUser(User user){
-        int count = baseMapper.updateUser(user);
+        int count = baseMapper.updateById(user);
         if(count > 0){
             return true;
         }

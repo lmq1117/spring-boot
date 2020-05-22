@@ -15,6 +15,7 @@
                 <th>Age</th>
                 <th>Email</th>
                 <th>CreatedAt</th>
+                <th>UpdatedAt</th>
                 <th th:title="当前迭代索引从0开始">stat.index</th>
                 <th th:title="当前迭代索引从1开始">stat.count</th>
                 <th th:title="迭代变量中的元素总数">stat.size</th>
@@ -31,7 +32,9 @@
                 <td th:text="${user.name}">Name</td>
                 <td th:text="${user.age}">Age</td>
                 <td th:text="${user.email}">Email</td>
-                <td th:text="${#dates.format(user.createdAt,'yyyy-MM-dd')}">CreatedAt</td>
+<!--                <td th:text="${#dates.format(user.createdAt,'yyyy-MM-dd')}">CreatedAt</td>-->
+                <td th:text="${user.createdAt}">CreatedAt</td>
+                <td th:text="${user.updatedAt}">CreatedAt</td>
                 <td th:text="${stat.index}"></td>
                 <td th:text="${stat.count}"></td>
                 <td th:text="${stat.size}"></td>
