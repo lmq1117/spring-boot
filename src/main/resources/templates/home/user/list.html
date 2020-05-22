@@ -42,6 +42,7 @@
                 <td th:text="${stat.last}"></td>
                 <td>
                     <a class="btn btn-default" th:href="@{/home/user/update/{id}(id=${user.id})}">修改</a>
+                    <a class="btn btn-default" th:href="@{/home/user/delete/{id}(id=${user.id})}">删除</a>
                 </td>
             </tr>
         </table>

@@ -36,4 +36,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getUserById(Integer id){
         return baseMapper.getUserById(id);
     }
+
+    public boolean deleteUserById(Integer id){
+        int count = baseMapper.deleteUserById(id);
+        if(count == 1){
+            return true;
+        }
+        return false;
+
+    }
 }

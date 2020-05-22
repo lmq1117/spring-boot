@@ -2,6 +2,7 @@ package com.sam.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sam.pojo.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -18,9 +19,12 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select id,name,age,email,created_at as createdAt from user")
     public List<User> getAllUser();
 
-    @Update("update users set name=#{name},age=#{age},email=#{email} where id = #{id}")
+    @Update("update user set name=#{name},age=#{age},email=#{email} where id = #{id}")
     public int updateUser(User user);
 
     @Select("select id,name,age,email,created_at createdAt from user where id = #{id}")
     public User getUserById(Integer id);
+
+    @Delete("delete from user where id = #{id}")
+    public int deleteUserById(Integer id);
 }
