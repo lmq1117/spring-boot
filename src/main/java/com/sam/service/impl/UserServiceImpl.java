@@ -6,6 +6,8 @@ import com.sam.pojo.User;
 import com.sam.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     public boolean saveUserService(User user){
@@ -16,5 +18,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             return false;
         }
+    }
+
+
+    public List<User> getAllUser(){
+        return baseMapper.getAllUser();
+    }
+
+    public boolean updateUser(User user){
+        int count = baseMapper.updateUser(user);
+        if(count > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public User getUserById(Integer id){
+        return baseMapper.getUserById(id);
     }
 }

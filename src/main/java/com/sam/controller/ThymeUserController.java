@@ -16,7 +16,7 @@ public class ThymeUserController {
     @GetMapping("/thyme.html")
     public String thymeData(Model model){
         User user = new User();
-        user.setId(1L);
+        user.setId(1);
         user.setName("sam");
         user.setAge(18);
         user.setEmail("sam@qq.com");

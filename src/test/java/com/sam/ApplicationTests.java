@@ -34,7 +34,7 @@ class ApplicationTests {
      */
     @Test
     void insertUserTest() {
-        User user = new User(19L, "王小二", 20, "xiaoer@qq.com");
+        User user = new User(19, "王小二", 20, "xiaoer@qq.com",null);
         int rows = userMapper.insertUser(user);
         System.out.println("影响行数是：" + rows);
     }
@@ -55,6 +55,12 @@ class ApplicationTests {
         } else {
             System.out.println("插入失败");
         }
+    }
+
+    @Test
+    void selectAllUserTest(){
+        //userMapper.getAllUser().forEach(System.out::println);
+        userService.getAllUser().forEach(System.out::println);
     }
 
 }
