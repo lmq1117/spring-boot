@@ -23,6 +23,6 @@ public class ThymeUserController {
 
         model.addAttribute("user",user);
 
-        return "home/thyme.html";
+        return "home/thyme";
     }
 }
