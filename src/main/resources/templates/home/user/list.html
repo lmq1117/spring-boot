@@ -8,6 +8,7 @@
 <body>
     <h2 style="text-align: center">list</h2>
     <div class="container">
+        <div th:if="${ not redirectMessage.isEmpty()}" th:text="${redirectMessage}+'hello one time'" style="color: red;"></div>
         <table class="table table-hover table-striped table-bordered">
             <tr>
                 <th>#</th>

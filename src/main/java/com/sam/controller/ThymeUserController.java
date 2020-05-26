@@ -20,9 +20,12 @@ public class ThymeUserController {
         user.setName("sam");
         user.setAge(18);
         user.setEmail("sam@qq.com");
-
         model.addAttribute("user",user);
-
         return "home/thyme";
+    }
+
+    @GetMapping("/layout")
+    public String thyme(){
+        return "thymeleaf/testlayout/index";
     }
 }

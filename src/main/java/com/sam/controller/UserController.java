@@ -5,11 +5,10 @@ import com.sam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Controller
@@ -26,12 +25,16 @@ public class UserController {
 
     //@ResponseBody
     @PostMapping("/user/save")
-    public String save(User user){
+    public String save(User user, RedirectAttributes redirectAttributes){
         boolean flag = userService.saveUserService(user);
         if (flag){
-            return "redirect:home/user/list";
+            //set session
+            redirectAttributes.addFlashAttribute("redirectMessage","保存成功");
+            return "redirect:/home/user/get/all";
         } else {
-            return "redirect:/home/to/error";
+            redirectAttributes.addFlashAttribute("redirectMessage","保存失败");
+            return "redirect:/home/user/get/all";
+            //return "redirect:/home/to/error";
         }
     }
 
@@ -43,13 +46,17 @@ public class UserController {
     @GetMapping("/user/list")
     public String userList(){
         User user = new User();
+
         return "home/user/list";
     }
 
     @GetMapping("/user/get/all")
-    public String getAllUser(Model model){
+    public String getAllUser(Model model,@ModelAttribute(value = "redirectMessage")String  redirectMessage){
         List<User> users = userService.getAllUser();
         model.addAttribute("users",users);
+        model.addAttribute("redirectMessage",redirectMessage);
+        System.out.println(redirectMessage);
+        //model.addFlashAttribute();
         return "/home/user/list";
     }
 
@@ -61,17 +68,12 @@ public class UserController {
         return "/home/user/update";
     }
 
-    @PostMapping("/user/update")
-    public String update(User user){
-        userService.updateUser(user);
-        return "redirect:/home/user/get/all";
-    }
-
-    @GetMapping("/user/delete/{id}")
-    public String delete(@PathVariable("id") Integer id){
-        userService.deleteUserById(id);
-        return "redirect:/home/user/get/all";
-    }
+    //@PostMapping("/user/update")
+    //public String update(User user){
+    //    User user = userService.getUserById(id);
+    //    model.addAttribute("user",user);
+    //    return "redirect:/home/user/get/all";
+    //}
 
 
     @GetMapping("/to/error")
