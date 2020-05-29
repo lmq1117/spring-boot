@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
       layout:decorator="admin/layout/base">
 <head>
     <title>Title</title>
 </head>
 
 <body>
+<!--左侧菜单栏-->
 <div layout:fragment="leftMenu" th:insert="admin/layout/leftMenu::menu"></div>
+
+<!--顶部搜索栏-->
 <div layout:fragment="topNav" th:insert="admin/layout/topNav::nav"></div>
 
-<div layout:fragment="footer">
-    <h2>footer</h2>
-</div>
+<!--footer-->
+<div layout:fragment="footer" th:replace="admin/layout/footer::footer"></div>
 
-<div layout:fragment="smallChatBox">
-    <h2>smallChatBox</h2>
+<!--chat box-->
+<div layout:fragment="smallChatBox" th:replace="admin/layout/smallChatBox::box"></div>
+<!--chat box-->
+<div layout:fragment="mainContent">
+    <h1>main content</h1>
 </div>
 </body>
 </html>
