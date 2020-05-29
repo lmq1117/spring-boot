@@ -76,6 +76,12 @@ public class UserController {
     //}
 
 
+
+    @GetMapping("/user/layout")
+    public String layout(){
+        return "/admin/user/list";
+    }
+
     @GetMapping("/to/error")
     public String toError(){
         return "home/error/error";

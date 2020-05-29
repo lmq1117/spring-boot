@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Random;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class ApplicationTests {
@@ -61,6 +63,19 @@ class ApplicationTests {
     void selectAllUserTest(){
         //userMapper.getAllUser().forEach(System.out::println);
         userService.getAllUser().forEach(System.out::println);
+    }
+
+    @Test
+    void tmpTest(){
+        String[] a = {"荷", "塘", "月","色"};
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0;i<1000;i++){
+            int index = new Random().nextInt(a.length);
+            stringBuilder.append(a[index]);
+
+        }
+        System.out.println(stringBuilder.toString());
+
     }
 
 }

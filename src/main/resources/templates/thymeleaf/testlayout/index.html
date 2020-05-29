@@ -11,12 +11,14 @@
 <div class="container">
     <div class="header">
         <!-- insert            -->
-        <div th:insert="thymeleaf/testlayout/layout/footer::copy"></div>
+        <div class="haha" th:insert="thymeleaf/testlayout/layout/footer::copy"></div>
     </div>
     <div class="main">
+        <!-- include            -->
         <div th:include="thymeleaf/testlayout/layout/footer::copy"></div>
     </div>
     <div class="footer">
+        <!-- replace            -->
         <div th:replace="thymeleaf/testlayout/layout/footer::copy"></div>
     </div>
 </div>

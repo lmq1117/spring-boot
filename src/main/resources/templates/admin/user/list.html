@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="admin/layout/base">
+<head>
+    <title>Title</title>
+</head>
+
+<body>
+<div layout:fragment="leftMenu" th:insert="admin/layout/leftMenu::menu"></div>
+<div layout:fragment="topNav" th:insert="admin/layout/topNav::nav"></div>
+
+<div layout:fragment="footer">
+    <h2>footer</h2>
+</div>
+
+<div layout:fragment="smallChatBox">
+    <h2>smallChatBox</h2>
+</div>
+</body>
+</html>
