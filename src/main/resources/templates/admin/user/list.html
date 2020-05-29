@@ -8,23 +8,23 @@
 <body>
 
 
-content
+<!--content-->
 <div layout:fragment="mainContent">
 
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>E-commerce orders</h2>
+            <h2>订单管理</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="index.html">Home</a>
+                    <a href="index.html">首页</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a>E-commerce</a>
+                    <a>订单列表</a>
                 </li>
-                <li class="breadcrumb-item active">
-                    <strong>Orders</strong>
-                </li>
+<!--                <li class="breadcrumb-item active">-->
+<!--                    <strong>Orders</strong>-->
+<!--                </li>-->
             </ol>
         </div>
     </div>
@@ -37,21 +37,21 @@ content
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="col-form-label" for="order_id">Order ID</label>
-                        <input type="text" id="order_id" name="order_id" value="" placeholder="Order ID"
+                        <label class="col-form-label" for="order_id">订单ID</label>
+                        <input type="text" id="order_id" name="order_id" value="" placeholder="订单ID"
                                class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="col-form-label" for="status">Order status</label>
-                        <input type="text" id="status" name="status" value="" placeholder="Status" class="form-control">
+                        <label class="col-form-label" for="status">订单状态</label>
+                        <input type="text" id="status" name="status" value="" placeholder="订单状态" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="col-form-label" for="customer">Customer</label>
-                        <input type="text" id="customer" name="customer" value="" placeholder="Customer"
+                        <label class="col-form-label" for="customer">客户姓名</label>
+                        <input type="text" id="customer" name="customer" value="" placeholder="客户姓名"
                                class="form-control">
                     </div>
                 </div>
@@ -59,7 +59,7 @@ content
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="col-form-label" for="date_added">Date added</label>
+                        <label class="col-form-label" for="date_added">添加时间</label>
                         <div class="input-group date">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_added"
                                                                                                         type="text"
@@ -70,7 +70,7 @@ content
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="col-form-label" for="date_modified">Date modified</label>
+                        <label class="col-form-label" for="date_modified">修改时间</label>
                         <div class="input-group date">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input
                                 id="date_modified" type="text" class="form-control" value="03/06/2014">
@@ -79,8 +79,8 @@ content
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label class="col-form-label" for="amount">Amount</label>
-                        <input type="text" id="amount" name="amount" value="" placeholder="Amount" class="form-control">
+                        <label class="col-form-label" for="amount">订单总额</label>
+                        <input type="text" id="amount" name="amount" value="" placeholder="订单总额" class="form-control">
                     </div>
                 </div>
             </div>
@@ -136,9 +136,9 @@ content
                                 </td>
                                 <td class="text-right footable-visible footable-last-column">
                                     <div class="btn-group">
-                                        <button class="btn-white btn btn-xs">View</button>
-                                        <button class="btn-white btn btn-xs">Edit</button>
-                                        <button class="btn-white btn btn-xs">Delete</button>
+                                        <button class="btn-white btn btn-xs">查看</button>
+                                        <button class="btn-warning btn btn-xs">编辑</button>
+                                        <button class="btn-danger btn btn-xs">删除</button>
                                     </div>
                                 </td>
                             </tr>
